@@ -1,0 +1,25 @@
+{
+  "name": "cypress-demo",
+  "version": "1.0.0",
+  "description": "cypress demo automating some common UI components",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx cypress run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aathi-ces/cypress-demo.git"
+  },
+  "author": "aathi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aathi-ces/cypress-demo/issues"
+  },
+  "homepage": "https://github.com/aathi-ces/cypress-demo#readme",
+  "devDependencies": {
+    "cypress": "^12.17.3"
+  },
+  "dependencies": {
+    "typescript": "^5.1.6"
+  }
+}
