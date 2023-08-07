@@ -1,0 +1,7 @@
+{
+  "fileInputField": "[data-testid='file-input']",
+  "uploadButton": "[data-testid='file-submit']",
+  "uploaded": {
+    "uploadedFile": "[id='uploaded-files']"
+  }
+}
