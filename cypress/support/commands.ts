@@ -9,6 +9,8 @@
 // https://on.cypress.io/custom-commands
 // ***********************************************
 import 'cypress-file-upload';
+import 'cypress-drag-drop';
+// import drag from './utils/drag-n-drop.util';
 //
 // -- This is a parent command --
 // Cypress.Commands.add('login', (email, password) => { ... })
@@ -31,7 +33,22 @@ import 'cypress-file-upload';
 //       login(email: string, password: string): Chainable<void>
 //       drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
 //       dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
+//       visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>):
+//            Chainable<Element>
 //     }
 //   }
 // }
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      dragAndDrop: (dragSelector: string, dropSelector: string) => Chainable;
+    }
+  }
+}
+
+Cypress.Commands.add('dragAndDrop', (subject: any, targetEl: any) => {
+  const dataTransfer = new DataTransfer();
+  cy.get(subject).trigger('dragstart', { dataTransfer });
+  cy.get(targetEl).trigger('drop', { dataTransfer });
+});

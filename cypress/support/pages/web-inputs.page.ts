@@ -1,5 +1,5 @@
-import webInputs from '../../fixtures/selectors/web-inputs.json';
 import { faker } from '@faker-js/faker';
+import webInputs from '../../fixtures/selectors/web-inputs.json';
 
 class WebInputs {
   private INPUT_FORM = () => cy.get(webInputs.inputForm);
@@ -24,8 +24,8 @@ class WebInputs {
       number: faker.finance.accountNumber({ length: 10 }),
       text: faker.string.alpha(10),
       password: faker.internet.password(),
-      date: (new Date()).toISOString().split('T')[0]
-    }
+      date: (new Date()).toISOString().split('T')[0],
+    };
     this.INPUT_NUMBER().type(input.number);
     this.INPUT_TEXT().type(input.text);
     this.INPUT_PASSWORD().type(input.password);
@@ -34,17 +34,14 @@ class WebInputs {
   };
 
   verifyOutputFormExist = (exist: boolean) => {
-    if(exist)
-      this.OUTPUT_FORM().should('exist');
-    else
-      this.OUTPUT_FORM().should('not.exist');
-  }
+    if (exist) { this.OUTPUT_FORM().should('exist'); } else { this.OUTPUT_FORM().should('not.exist'); }
+  };
 
   verifyOutputForm = (input: any) => {
     this.OUTPUT_NUMBER().should('have.text', input.number);
     this.OUTPUT_TEXT().should('have.text', input.text);
     this.OUTPUT_PASSWORD().should('have.text', input.password);
     this.OUTPUT_DATE().should('have.text', input.date);
-  }
+  };
 }
 export default new WebInputs();
