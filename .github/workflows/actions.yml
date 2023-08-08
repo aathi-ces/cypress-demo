@@ -1,0 +1,45 @@
+name: cypress-demo
+run-name: cypress-demo is executed by ${{ github.actor }} 🚀
+# This workflow represents a set of basic End-to-End tests
+on:
+  push:
+    branches:
+      - 'demo'
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  setup:
+    runs-on: macos-latest
+    steps:
+      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+          cache: 'npm'
+  basic-on-mac:
+    needs: setup
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Cypress tests
+        uses: ./
+        with:
+          working-directory: /
+          build: npx cypress info
+
+      - name: Run all cypress test
+        run: npm run cy:run networkRequests
+
+      - run: echo "🍏 This job's status is ${{ job.status }}."
