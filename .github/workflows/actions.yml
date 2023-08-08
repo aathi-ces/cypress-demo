@@ -23,6 +23,7 @@ jobs:
         with:
           node-version: '16.x'
           cache: 'npm'
+          cache-dependency-path: ''
   basic-on-mac:
     needs: setup
     runs-on: macos-latest
