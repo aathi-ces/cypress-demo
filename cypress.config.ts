@@ -2,6 +2,11 @@
 import { defineConfig } from 'cypress';
 
 export default defineConfig({
+  env: {
+    BASE_URL: 'https://restful-booker.herokuapp.com',
+    auth: '/auth',
+    booking: '/booking',
+  },
   e2e: {
     baseUrl: 'https://practice.expandtesting.com',
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

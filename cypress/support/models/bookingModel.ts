@@ -1,18 +1,3 @@
-// export interface Booking {
-//   firstname: string;
-//   lastname: string;
-//   totalprice: number;
-//   depositpaid: boolean;
-//   bookingdates: Bookingdates;
-//   additionalneeds: string;
-// }
-
-// export interface Bookingdates {
-//   checkin: Date;
-//   checkout: Date;
-// }
-
-
 import { JsonClassType, JsonProperty, ObjectMapper, JsonSerialize, JsonDeserialize } from 'jackson-js';
 
 class DateSerializer {
@@ -62,3 +47,10 @@ export class Booking {
   bookingdates?: BookingDates;
 }
 
+export class BookingNo {
+  @JsonProperty() @JsonClassType({type: () => [Number]})
+  bookingid: number | null = null;
+
+  @JsonProperty() @JsonClassType({type: () => [Booking]})
+  booking?: Booking;
+}

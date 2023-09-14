@@ -1,28 +1,44 @@
 import { ObjectMapper } from 'jackson-js';
 import { HttpHeader } from '../enums/httpHeaders';
 import { BookingId } from '../support/models/bookingIdsModel';
-import { Booking, BookingDates } from '../support/models/bookingModel';
+import { Booking, BookingDates, BookingNo } from '../support/models/bookingModel';
 import { booking as bookingPayload } from '../support/data/bookingDetails';
+import { BookingHelper } from '../helper/booking';
 import * as arrayUtils from '../utils/arrayUtils';
 import * as mime from 'mime-types';
 import { Parse } from '../utils/objectMapperUtils';
+import { ApiResponse } from '../support/apiRequests';
+import { getBookings } from '../controller/booking';
 
 
 
-describe('Create Booking API Test', () => {
+describe('Validate Booking APIs', () => {
+
+  const bookingHelper = new BookingHelper();
+
+  it('/GET Get all booking ids', () => {
+    bookingHelper.getBookings().then((response: ApiResponse['body']) => {
+      expect(response.body).to.be.a('array')
+    });
+  });
+
+  it('/GET Get booking id', () => {
+    bookingHelper.getBookings().then((response: ApiResponse['body']) => {
+      expect(response.body).to.be.a('array')
+      let bookingIds = response.body as BookingId[];
+      let randomBookingId = arrayUtils.pickRandomItems(bookingIds, 1)[0].bookingid;
+      bookingHelper.getBookingById(randomBookingId);
+    });
+  });
+
   it('/POST Should create a new booking', () => {
-    cy.request({
-      method: 'POST',
-      url: 'https://restful-booker.herokuapp.com/booking',
-      body: bookingPayload,
-      headers: {
-        [HttpHeader.CONTENT_TYPE]: mime.lookup('json'),
-      },
-    }).then((response) => {
+    bookingHelper.postBooking(bookingPayload).then((response: ApiResponse['body']) => {
       expect(response.status).to.eq(200);
       expect(response.body.booking).to.have.property('totalprice', 200);
       const bookingId = response.body.bookingid;
-      cy.log(bookingId);
+      bookingHelper.getBookingById(bookingId).then((resp: ApiResponse['body']) => {
+        expect(Parse<Booking>(resp.body)).to.deep.equal(Parse<Booking>(response.body.booking));
+      });
     });
   });
 

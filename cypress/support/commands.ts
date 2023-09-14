@@ -10,6 +10,7 @@
 // ***********************************************
 import 'cypress-file-upload';
 import 'cypress-drag-drop';
+import { ApiRequest } from '../support/apiRequests';
 // import drag from './utils/drag-n-drop.util';
 //
 // -- This is a parent command --
@@ -44,6 +45,10 @@ declare global {
     interface Chainable {
       dragAndDrop: (dragSelector: string, dropSelector: string) => Chainable;
     }
+
+    interface Chainable<Subject> {
+      apiRequest(request: ApiRequest): Chainable<Response<any>>;
+    }
   }
 }
 
@@ -52,3 +57,23 @@ Cypress.Commands.add('dragAndDrop', (subject: any, targetEl: any) => {
   cy.get(subject).trigger('dragstart', { dataTransfer });
   cy.get(targetEl).trigger('drop', { dataTransfer });
 });
+
+Cypress.Commands.add('apiRequest', (request: ApiRequest) => {
+  let token = '';
+
+  if (request.authHeader != null) {
+    token = 'Bearer ' + request.authHeader;
+  }
+  return cy.request({
+    method: request.method,
+    url: Cypress.env('BASE_URL') + request.url,
+    headers: {
+      'X-API-Key': Cypress.env('API_KEY'),
+      Authorization: token,
+    },
+    body: request.body,
+    form: request.form,
+    qs: request.qs,
+  });
+});
+
