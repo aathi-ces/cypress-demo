@@ -1,0 +1,4 @@
+{
+  "searchField": "input[id='search-input']",
+  "searchButton": "button[id='search-button']"
+}

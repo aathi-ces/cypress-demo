@@ -1,0 +1,15 @@
+{
+  "displayInputs": "[id='btn-display-inputs']",
+  "clearInputs": "[id='btn-clear-inputs']",
+  "inputForm": "[class='col-md-4']:has(label[for*='input'])",
+  "inputNumber": "label[for='input-number']+input",
+  "inputText": "label[for='input-text']+input",
+  "inputPassword": "label[for='input-password']+input",
+  "inputDate": "label[for='input-date']+input",
+  "outputForm": "[class='col-md-4']:has(label[for*='ouput'])",
+  "outputNumber": "label[for='output-number']+strong",
+  "outputText": "label[for='output-text']+strong",
+  "outputPassword": "label[for='output-password']+strong",
+  "outputDate": "label[for='output-date']+strong"
+
+}
